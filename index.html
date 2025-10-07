@@ -1349,6 +1349,149 @@
     </style>
 </head>
 <body>
+    <!-- Popup Pengumuman -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-container">
+        <div class="popup-content">
+            <h3>Welcome to 7C Al-Battani </h3>
+            <p>&quot;Bagi Yang Mau Request Atau Punya Ide Chat Mimin Ya Insya Allah Saya Kerjakan Kalo Saya Bisa ya   
+                <li><a href="https://wa.me/6281374488601" rel="noopener noreferrer"><i class="fas fa-phone"></i> +6281374488601</a></li> </p>
+            <button class="popup-close" id="popupClose">
+                Yok Masuk Ke Website kami!!           </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    animation: popupFadeIn 0.5s ease-out forwards;
+}
+
+.popup-container {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    animation: popupScaleIn 0.5s ease-out 0.2s forwards;
+}
+
+.popup-content h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.popup-content p {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.popup-close {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.popup-close:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(74, 107, 255, 0.4);
+}
+
+@keyframes popupFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popupScaleIn {
+    to {
+        transform: scale(1);
+    }
+}
+
+.popup-overlay.hiding {
+    animation: popupFadeOut 0.3s ease-in forwards;
+}
+
+.popup-container.hiding {
+    animation: popupScaleOut 0.3s ease-in forwards;
+}
+
+@keyframes popupFadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes popupScaleOut {
+    to {
+        transform: scale(0.7);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupClose = document.getElementById('popupClose');
+    
+    // Check if popup should be shown
+        if (!localStorage.getItem('popupShown')) {
+        showPopup();
+    }
+        
+    function showPopup() {
+        popupOverlay.style.display = 'flex';
+        localStorage.setItem('popupShown', 'true');
+    }
+    
+    function hidePopup() {
+        popupOverlay.classList.add('hiding');
+        popupOverlay.querySelector('.popup-container').classList.add('hiding');
+        setTimeout(() => {
+            popupOverlay.style.display = 'none';
+        }, 300);
+    }
+    
+    popupClose.addEventListener('click', hidePopup);
+    
+    // Close popup when clicking outside
+    popupOverlay.addEventListener('click', function(e) {
+        if (e.target === popupOverlay) {
+            hidePopup();
+        }
+    });
+    
+    // Close popup with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && popupOverlay.style.display === 'flex') {
+            hidePopup();
+        }
+    });
+});
+</script>
     <!-- Theme Toggle -->
     <div class="theme-toggle" id="themeToggle">
         <i class="fas fa-moon"></i>
@@ -1378,7 +1521,7 @@
             <a href="#schedule" class="nav-link">Jadwal</a>
             <a href="#gallery" class="nav-link">Galeri</a>
             <a href="#contact" class="nav-link">Kontak</a>
-            <a href="admin/login.php" class="admin-login">
+            <a href="#" class="admin-login">
                 <i class="fas fa-user-shield"></i> Admin
             </a>
         </div>
