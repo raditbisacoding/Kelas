@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login 7C</title>
+    <style>
+        /* Reset dan Body Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Container Utama */
+.login-container {
+  width: 100%;
+  max-width: 350px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.login-container h2 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Checkbox */
+.checkbox-group {
+  margin: 15px 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 8px;
+  width: auto;
+}
+
+.checkbox-group label {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+/* Tombol Login */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Link Lupa Password dan Daftar */
+.forgot-password,
+.signup-link {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.forgot-password a,
+.signup-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password a:hover,
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .login-container h2 {
+    font-size: 20px;
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+         <h2>Selamat Datang! Silakan Login</h2>
+    <form id="login-form" action="#" method="POST">
+      <div class="input-group">
+        <label for="username">Nama Pengguna:</label>
+        <input type="text" id="username" name="username" placeholder="Masukkan nama pengguna" required>
+      </div>
+      
+      <div class="input-group">
+        <label for="password">Kata Sandi:</label>
+        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+      </div>
+      
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" name="remember"> Ingat saya
+        </label>
+      </div>
+      
+      <button type="submit" class="login-btn">Login</button>
+      
+      <!-- Elemen untuk pesan error -->
+      <div id="error-message" class="error-message" style="display: none;"></div>
+      
+      <p class="forgot-password"><a href="#">Lupa kata sandi Anda?</a></p>
+      <p class="signup-link">Belum punya akun? <a href="#">Daftar sekarang</a></p>
+    </form>
+  </div>
+ 
+  <script>
+     // Validasi login sederhana
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+          event.preventDefault(); // Cegah submit default
+      
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorDiv = document.getElementById('error-message');
+      
+      // Kredensial default (ganti sesuai kebutuhan)
+      const validUsername = 'admin';
+      const validPassword = 'password123';
+      
+      if (username === validUsername && password === validPassword) {
+        // Login sukses
+        alert('Login berhasil! Selamat datang, ' + username + '!');
+        // Redirect ke halaman dashboard (buat file dashboard.html jika perlu)
+        window.location.href = 'dashboard.html'; // Atau sesuaikan URL
+      } else {
+        // Login gagal
+        errorDiv.textContent = 'Username atau password salah! Coba lagi.';
+        errorDiv.style.display = 'block';
+        errorDiv.style.color = '#e74c3c'; // Warna merah untuk error
+      }
+    });
+    
+    // Sembunyikan error jika input berubah
+    document.getElementById('username').addEventListener('input', function() {
+      document.getElementById('error-message').style.display = 'none';
+    });
+
+  </script>
+</body>
+</html>
