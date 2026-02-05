@@ -1349,7 +1349,150 @@
     </style>
 </head>
 <body>
-   
+ 
+
+<style>
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    animation: popupFadeIn 0.5s ease-out forwards;
+}
+
+.popup-container {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    animation: popupScaleIn 0.5s ease-out 0.2s forwards;
+}
+
+.popup-content h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.popup-content p {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.popup-close {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.popup-close:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(74, 107, 255, 0.4);
+}
+
+@keyframes popupFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popupScaleIn {
+    to {
+        transform: scale(1);
+    }
+}
+
+.popup-overlay.hiding {
+    animation: popupFadeOut 0.3s ease-in forwards;
+}
+
+.popup-container.hiding {
+    animation: popupScaleOut 0.3s ease-in forwards;
+}
+
+@keyframes popupFadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes popupScaleOut {
+    to {
+        transform: scale(0.7);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupClose = document.getElementById('popupClose');
+    
+    // Check if popup should be shown
+        if (!localStorage.getItem('popupShown')) {
+        showPopup();
+    }
+        
+    function showPopup() {
+        popupOverlay.style.display = 'flex';
+        localStorage.setItem('popupShown', 'true');
+    }
+    
+    function hidePopup() {
+        popupOverlay.classList.add('hiding');
+        popupOverlay.querySelector('.popup-container').classList.add('hiding');
+        setTimeout(() => {
+            popupOverlay.style.display = 'none';
+        }, 300);
+    }
+    
+    popupClose.addEventListener('click', hidePopup);
+    
+    // Close popup when clicking outside
+    popupOverlay.addEventListener('click', function(e) {
+        if (e.target === popupOverlay) {
+            hidePopup();
+        }
+    });
+    
+    // Close popup with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && popupOverlay.style.display === 'flex') {
+            hidePopup();
+        }
+    });
+});
+</script>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <a href="#" class="logo">
@@ -1399,8 +1542,8 @@
                 <img src="Ms.endang.jpg" alt="Wali Kelas" class="wali-kelas-img" onerror="this.src='https://source.unsplash.com/random/300x300/?teacher'">
                 <div class="wali-kelas-info">
                     <h3 id="wali-kelas-nama">Endang Deciku</h3>
-                    <p><i class="fas fa-graduation-cap"></i> <span id="wali-kelas-gelar">Guru Ilmu Pengetahuan Alam</span></p>
-                    <p><i class="fas fa-envelope"></i> <span id="wali-kelas-email">admin@gmail.com</span></p>
+                    <p><i class="fas fa-graduation-cap"></i> <span id="wali-kelas-gelar">Guru IPA</span></p>
+                    <p><i class="fas fa-envelope"></i> <span id="wali-kelas-email">teacher.endangdeciku@gmail.com</span></p>
                     <p><i class="fas fa-quote-left"></i> <span id="wali-kelas-motto">&quot;Pendidikan adalah senjata paling ampuh untuk mengubah dunia.&quot;</span></p>
                 </div>
             </div>
@@ -1429,7 +1572,7 @@
                             <div class="structure-connector vertical"></div>
                             <div class="structure-connector horizontal left"></div>
                             <div class="structure-role">KETUA KELAS</div>
-                            <div class="structure-name">Rezio Fernado Torres</div>
+                            <div class="structure-name">Raditya Ahmad Yge</div>
                         </div>
                         
                         <div class="structure-item ketua">
@@ -1445,14 +1588,27 @@
                         <div class="structure-item bendahara">
                             <div class="structure-connector vertical"></div>
                             <div class="structure-role">BENDAHARA </div>
-                            <div class="structure-name">Farah Annisa Salsabila</div>
+                            <div class="structure-name">Jasmine Putri Winnesha</div>
                         </div>
                         <div class="structure-item bendahara">
                             <div class="structure-connector vertical"></div>
                             <div class="structure-role">Sekretaris</div>
-                            <div class="structure-name">Filzah Qaireen Batrisyia Widaka</div>
+                            <div class="structure-name">Raihana Safira Batrisyah</div>
                         </div>
+                        <div class="structure-item bendahara">
+                            <div class="structure-connector vertical"></div>
+                            <div class="structure-role">Keamanan</div>
+                            <div class="structure-name">Zifanna Ludra </div>
+                            <div class="structure-name">Rezio Fernando Torres</div>
+                            <div class="structure-name">Farezi Dlorif Aryo</div>
+                        </div>
+                        <div class="structure-item bendahara">
+                            <div class="structure-connector vertical"></div>
+                            <div class="structure-role">Pj. Cek Kebersihan</div>
+                            <div class="structure-name">Venus Puti Adinyo</div>
+                            <div class="structure-name">Inaya Azmi Athifa</div>
                         
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1476,23 +1632,23 @@
                         <tbody>
                                                         <tr>
                                 <td><strong>SENIN</strong></td>
-                                <td>PJOK<br>IPA<br>BK<br>PPKN<br>MTK</td>
+                                <td>MTK<br>PJOK<br>SENI TARI<br>INFORMATIKA<br>
                             </tr>
                                                         <tr>
                                 <td><strong>SELASA</strong></td>
-                                <td>Bahasa Indonesia<br>Seni tari<br>IPA<br>Informatika</td>
+                                <td>IPA<br>MTK<br>BAHASA INDONESI<br>PJBL</td>
                             </tr>
                                                         <tr>
                                 <td><strong>RABU</strong></td>
-                                <td>Bahasa Inggris<br>Bahasa Indonesia<br>MTK<br>Minangkabau</td>
+                                <td>PENDIDIKAN PANCASILA<br>KEMINANGKABAUAN<br>PAI<br>ENGLISH</td>
                             </tr>
                                                         <tr>
                                 <td><strong>KAMIS</strong></td>
-                                <td>PAI<br>PJBL</td>
+                                <td>PJBL<br>BAHASA INDONESIA<br>IPS</td>
                             </tr>
                                                         <tr>
                                 <td><strong>JUMAT</strong></td>
-                                <td>IPS</td>
+                                <td>BIMBINGAN KOMSELING<BR>IPA</td>
                             </tr>
                                                     </tbody>
                     </table>
@@ -1505,7 +1661,7 @@
                             <i class="fas fa-calendar-day"></i>
                             <div>
                                 <strong>SENIN</strong>
-                                <div>,ANINDITA KHAIRUNISWA,INAYA AZMI ATHIFA,SALMA ADZ DZAKIRA,AZKA PUTRA YUDHANTA,MUHAMMAD ALFAREZA WINANDA,RADITYA IKHWANUL FIKRI</div>
+                                <div>ANINDITA KHAIRUNISWA,INAYA AZMI ATHIFA,SALMA ADZ DZAKIRA,AZKA PUTRA YUDHANTA,MUHAMMAD ALFAREZA WINANDA,RADITYA IKHWANUL FIKRI</div>
 
                         </li>
                                                 <li>
@@ -1548,7 +1704,7 @@
             <h2 class="section-title">Album Kenangan</h2>
             <div class="gallery-grid">
                                 <div class="gallery-item">
-                    <img src="Foto Kelas1.jpg" alt="1" onerror="this.src='https://source.unsplash.com/random/600x400/?school'">
+                    <img src="Screenshot 2026-02-05 210052.png" alt="1" onerror="this.src='https://source.unsplash.com/random/600x400/?school'">
                     <div class="gallery-overlay">
                         <h4>1</h4>
                     </div>
@@ -1639,8 +1795,8 @@
                     <h3>Kontak</h3>
                     <ul>
                         <li><a href="#"><i class="fas fa-user"></i>Endang Deciku</a></li>
-                        <li><a href="https://wa.me/6282384343510" rel="noopener noreferrer"><i class="fas fa-phone"></i> +62 82384343510</a></li>
-                        <li><a href="mailto:Admin@gmail.com"><i class="fas fa-envelope"></i> Admin@gmail.com</a></li>
+                        <li><a href="https://wa.me/6282384343510" rel="noopener noreferrer"><i class="fas fa-phone"></i> +6282384343510</a></li>
+                        <li><a href="https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRpddDSSxBKnBmpMQTZtQnhFbFKBMdqWjdSdmhCmngtWjwVfsRMZJbWntTXkklHjcXphWmV"><i class="fas fa-envelope"></i>teacher.endangdeciku@gmail.com</a></li>
                         <li><a href="https://maps.app.goo.gl/UA26BF9hLo9h6MEH8" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i> Lokasi Sekolah</a></li>
                     </ul>
                 </div>
@@ -1908,5 +2064,3 @@
     </script>
 </body>
 </html>
-
-
